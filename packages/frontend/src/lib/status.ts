@@ -44,8 +44,8 @@ export const STATUS_META: Record<string, StatusMeta> = {
   },
   queued: {
     label: 'Queued',
-    className: 'text-violet-300 bg-violet-500/10 border-violet-500/30',
-    dot: 'bg-violet-400',
+    className: 'text-blue-300 bg-blue-500/10 border-blue-500/30',
+    dot: 'bg-blue-400',
   },
   executed: {
     label: 'Executed',

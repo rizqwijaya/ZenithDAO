@@ -1,0 +1,27 @@
+{
+  "root": "0x3f47a5be02b8ba1c1d1db57297e6dbc44334baa142b6b7ba969ec74ef42140db",
+  "total": "20000000000000000000000",
+  "count": 3,
+  "claims": {
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": {
+      "amount": "10000000000000000000000",
+      "proof": [
+        "0x47b05bb95b7a87b8a913e5102024727d734dacdb5d326e80bd0fa3cdb0d9d124",
+        "0x97c7eb4045974e7ce7c1e1aeefc5a1596757001f821a234d852ca6c5a426f31a"
+      ]
+    },
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8": {
+      "amount": "5000000000000000000000",
+      "proof": [
+        "0x2cf906feca261b5f83c1ffb371099322c082620cc51af42d6a3b38508d4e32bc",
+        "0x97c7eb4045974e7ce7c1e1aeefc5a1596757001f821a234d852ca6c5a426f31a"
+      ]
+    },
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC": {
+      "amount": "5000000000000000000000",
+      "proof": [
+        "0x8987f846f62788f605165a0cbbd80e7c310fceef35ecaab834d457d84fde3b53"
+      ]
+    }
+  }
+}

@@ -6,17 +6,17 @@ export default {
     extend: {
       colors: {
         zenith: {
-          50: '#eef0ff',
-          100: '#e0e3ff',
-          200: '#c7ccff',
-          300: '#a5a9ff',
-          400: '#8b85fc',
-          500: '#6d5efc',
-          600: '#5b3df2',
-          700: '#4d2fd6',
-          800: '#3f29ac',
-          900: '#362888',
-          950: '#211650',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+          950: '#172554',
         },
         ink: {
           900: '#0a0a14',
@@ -30,10 +30,10 @@ export default {
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 40px -10px rgba(109, 94, 252, 0.45)',
+        glow: '0 0 40px -10px rgba(59, 130, 246, 0.45)',
       },
       backgroundImage: {
-        'zenith-grad': 'linear-gradient(135deg, #6d5efc 0%, #8b5cf6 50%, #ec4899 100%)',
+        'zenith-grad': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #06b6d4 100%)',
       },
     },
   },

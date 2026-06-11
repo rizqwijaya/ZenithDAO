@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { LayoutDashboard, FileText, PlusCircle, Users } from 'lucide-react';
+import { ConnectWallet } from './ConnectWallet';
 
 const links = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -43,11 +43,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <ConnectButton
-          accountStatus={{ smallScreen: 'avatar', largeScreen: 'full' }}
-          chainStatus="icon"
-          showBalance={{ smallScreen: false, largeScreen: true }}
-        />
+        <ConnectWallet />
       </div>
 
       <nav className="flex items-center gap-1 overflow-x-auto border-t border-white/5 px-3 py-2 md:hidden">
