@@ -1,4 +1,5 @@
 import { ClaimPanel } from '../components/ClaimPanel';
+import { AddTokenCard } from '../components/AddTokenCard';
 
 export function Claim() {
   return (
@@ -10,6 +11,7 @@ export function Claim() {
         </p>
       </div>
       <ClaimPanel />
+      <AddTokenCard />
     </div>
   );
 }
