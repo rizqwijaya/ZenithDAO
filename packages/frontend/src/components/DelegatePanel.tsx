@@ -6,7 +6,7 @@ import {
   useWaitForTransactionReceipt,
 } from 'wagmi';
 import { isAddress, zeroAddress, type Address } from 'viem';
-import { Loader2, UserCheck, Zap, ExternalLink, CheckCircle2, Sparkles } from 'lucide-react';
+import { Loader2, UserCheck, Zap, ExternalLink, CheckCircle2, Sparkles, Coins } from 'lucide-react';
 import { tokenAbi } from '../config/abis';
 import { TOKEN_ADDRESS, etherscanTx } from '../config/contracts';
 import { fmtTokens, shortAddress } from '../lib/format';
@@ -68,24 +68,37 @@ export function DelegatePanel() {
 
   return (
     <div className="space-y-5">
-      <div className="card p-6">
+      <div className="card animate-fade-up p-6" style={{ animationDelay: '60ms' }}>
         <div className="grid gap-4 sm:grid-cols-3">
-          <Stat label="Token balance" value={`${balance !== undefined ? fmtTokens(balance as bigint) : '-'} ZNTH`} />
-          <Stat label="Voting power" value={`${votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH`} highlight />
-          <Stat
+          <StatCard
+            icon={Coins}
+            label="Token balance"
+            value={`${balance !== undefined ? fmtTokens(balance as bigint) : '-'} ZNTH`}
+            accent="from-white/10 to-white/5"
+          />
+          <StatCard
+            icon={Zap}
+            label="Voting power"
+            value={`${votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH`}
+            accent="from-zenith-500/20 to-cyan-500/10"
+            highlight
+          />
+          <StatCard
+            icon={UserCheck}
             label="Delegated to"
             value={notDelegated ? 'Nobody' : isSelfDelegated ? 'Self' : shortAddress(delegatedTo)}
+            accent="from-white/10 to-white/5"
           />
         </div>
 
         {isConnected && notDelegated && (
-          <p className="mt-4 rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-300">
+          <p className="mt-4 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-300">
             Your tokens have no voting power yet. Delegate to yourself to activate it.
           </p>
         )}
       </div>
 
-      <div className="card space-y-4 p-6">
+      <div className="card animate-fade-up space-y-4 p-6" style={{ animationDelay: '120ms' }}>
         <div>
           <h3 className="text-base font-semibold text-white">Activate voting power</h3>
           <p className="mt-1 text-sm text-zinc-400">
@@ -179,11 +192,28 @@ export function DelegatePanel() {
   );
 }
 
-function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  accent,
+  highlight,
+}: {
+  icon: typeof Coins;
+  label: string;
+  value: string;
+  accent: string;
+  highlight?: boolean;
+}) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <div className="stat-label">{label}</div>
-      <div className={`mt-1 text-lg font-semibold ${highlight ? 'text-zenith-200' : 'text-white'}`}>
+    <div className="group rounded-xl border border-white/10 bg-white/5 p-4 transition hover:-translate-y-0.5 hover:border-zenith-500/40 hover:bg-white/[0.07]">
+      <div className="flex items-center gap-2">
+        <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${accent}`}>
+          <Icon className="h-3.5 w-3.5 text-white" />
+        </span>
+        <div className="stat-label">{label}</div>
+      </div>
+      <div className={`mt-2 text-lg font-semibold ${highlight ? 'text-zenith-200' : 'text-white'}`}>
         {value}
       </div>
     </div>

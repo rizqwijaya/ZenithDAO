@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, PlusCircle, Users, Gift } from 'lucide-react';
+import { LayoutDashboard, FileText, PlusCircle, Users, Droplets } from 'lucide-react';
 import { ConnectWallet } from './ConnectWallet';
 
 const links = [
@@ -7,7 +7,7 @@ const links = [
   { to: '/proposals', label: 'Proposals', icon: FileText, end: false },
   { to: '/create', label: 'Create', icon: PlusCircle, end: false },
   { to: '/delegate', label: 'Delegate', icon: Users, end: false },
-  { to: '/claim', label: 'Claim', icon: Gift, end: false },
+  { to: '/claim', label: 'Faucet', icon: Droplets, end: false },
 ];
 
 export function Navbar() {

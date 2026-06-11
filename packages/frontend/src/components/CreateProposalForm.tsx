@@ -7,7 +7,18 @@ import {
   useWaitForTransactionReceipt,
 } from 'wagmi';
 import { encodeFunctionData, formatEther, isAddress, parseEther, type Address, type Hex } from 'viem';
-import { Loader2, CheckCircle2, ExternalLink, Send } from 'lucide-react';
+import {
+  Loader2,
+  CheckCircle2,
+  ExternalLink,
+  Send,
+  Zap,
+  User,
+  Coins,
+  FileText,
+  Sparkles,
+  ArrowRight,
+} from 'lucide-react';
 import { governorAbi, tokenAbi, vaultAbi } from '../config/abis';
 import { GOVERNOR_ADDRESS, TOKEN_ADDRESS, VAULT_ADDRESS, etherscanTx } from '../config/contracts';
 import { fmtTokens } from '../lib/format';
@@ -81,31 +92,55 @@ export function CreateProposalForm() {
 
   if (isSuccess) {
     return (
-      <div className="card flex flex-col items-center p-8 text-center">
-        <CheckCircle2 className="h-14 w-14 text-emerald-400" />
-        <h3 className="mt-4 text-xl font-semibold text-white">Proposal created</h3>
-        <p className="mt-1 max-w-sm text-sm text-zinc-400">
+      <div className="animate-pop-in relative overflow-hidden rounded-2xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/15 to-cyan-500/10 p-8 text-center">
+        <Sparkles className="animate-twinkle absolute left-8 top-6 h-4 w-4 text-emerald-300/70" />
+        <Sparkles
+          className="animate-twinkle absolute right-10 top-10 h-3.5 w-3.5 text-cyan-300/70"
+          style={{ animationDelay: '0.6s' }}
+        />
+        <Sparkles
+          className="animate-twinkle absolute bottom-10 left-14 h-3 w-3 text-emerald-200/60"
+          style={{ animationDelay: '1.1s' }}
+        />
+
+        <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center">
+          <span className="animate-pulse-glow absolute inset-0 rounded-full bg-emerald-400/30 blur-md" />
+          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/50">
+            <CheckCircle2 className="animate-check-pop h-8 w-8 text-emerald-300" />
+          </span>
+        </div>
+
+        <h3 className="bg-gradient-to-r from-emerald-200 to-cyan-200 bg-clip-text text-xl font-bold text-transparent">
+          Proposal created!
+        </h3>
+        <p className="mx-auto mt-1 max-w-sm text-sm text-zinc-400">
           It enters a 1-block voting delay, then voting opens for 50 blocks.
         </p>
-        {hash && (
-          <a
-            href={etherscanTx(hash)}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 text-xs text-zenith-300 hover:underline"
-          >
-            View transaction <ExternalLink className="h-3 w-3" />
-          </a>
-        )}
-        <button onClick={() => navigate('/proposals')} className="btn-primary mt-6">
-          Go to proposals
-        </button>
+
+        <div className="mt-5 flex flex-col items-center gap-2">
+          <button onClick={() => navigate('/proposals')} className="btn-primary w-full max-w-xs">
+            Go to proposals
+            <ArrowRight className="h-4 w-4" />
+          </button>
+          {hash && (
+            <a
+              href={etherscanTx(hash)}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-200/80 hover:text-emerald-200"
+            >
+              View transaction <ExternalLink className="h-3 w-3" />
+            </a>
+          )}
+        </div>
       </div>
     );
   }
 
+  const eligible = !belowThreshold && votes !== undefined;
+
   return (
-    <div className="card space-y-5 p-6">
+    <div className="card animate-fade-up space-y-5 p-6" style={{ animationDelay: '60ms' }}>
       <div>
         <h2 className="text-lg font-semibold text-white">New treasury proposal</h2>
         <p className="mt-1 text-sm text-zinc-400">
@@ -115,12 +150,30 @@ export function CreateProposalForm() {
 
       {/* voting power vs threshold */}
       <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
-        <span className="text-zinc-400">Your voting power</span>
-        <span className="font-semibold text-white">
-          {votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH
-          <span className="ml-2 text-xs font-normal text-zinc-500">
-            / {threshold !== undefined ? fmtTokens(threshold as bigint) : '-'} required
+        <span className="inline-flex items-center gap-2 text-zinc-400">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-zenith-500/20 to-cyan-500/10">
+            <Zap className="h-3.5 w-3.5 text-white" />
           </span>
+          Your voting power
+        </span>
+        <span className="flex items-center gap-2">
+          <span className="font-semibold text-white">
+            {votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH
+            <span className="ml-1.5 text-xs font-normal text-zinc-500">
+              / {threshold !== undefined ? fmtTokens(threshold as bigint) : '-'} req
+            </span>
+          </span>
+          {votes !== undefined && threshold !== undefined && (
+            <span
+              className={`badge ${
+                eligible
+                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                  : 'border-amber-500/30 bg-amber-500/10 text-amber-300'
+              }`}
+            >
+              {eligible ? 'Eligible' : 'Below'}
+            </span>
+          )}
         </span>
       </div>
 
@@ -131,7 +184,9 @@ export function CreateProposalForm() {
       )}
 
       <label className="block">
-        <span className="stat-label">Recipient address</span>
+        <span className="stat-label inline-flex items-center gap-1.5">
+          <User className="h-3.5 w-3.5" /> Recipient address
+        </span>
         <input
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
@@ -144,7 +199,9 @@ export function CreateProposalForm() {
       </label>
 
       <label className="block">
-        <span className="stat-label">Amount (ETH)</span>
+        <span className="stat-label inline-flex items-center gap-1.5">
+          <Coins className="h-3.5 w-3.5" /> Amount (ETH)
+        </span>
         <input
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -158,7 +215,9 @@ export function CreateProposalForm() {
       </label>
 
       <label className="block">
-        <span className="stat-label">Description</span>
+        <span className="stat-label inline-flex items-center gap-1.5">
+          <FileText className="h-3.5 w-3.5" /> Description
+        </span>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}

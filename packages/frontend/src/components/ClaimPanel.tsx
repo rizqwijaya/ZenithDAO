@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Coins,
   Activity,
+  Sparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { faucetAbi, tokenAbi } from '../config/abis';
@@ -171,29 +172,48 @@ export function ClaimPanel() {
           )}
 
           {isSuccess && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
-                <span className="inline-flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4" /> Claimed {amountLabel} ZNTH
+            <div className="animate-pop-in relative overflow-hidden rounded-xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/15 to-cyan-500/10 p-5 text-center">
+              {/* twinkling sparkle accents */}
+              <Sparkles className="animate-twinkle absolute left-5 top-4 h-3.5 w-3.5 text-emerald-300/70" />
+              <Sparkles
+                className="animate-twinkle absolute right-6 top-6 h-3 w-3 text-cyan-300/70"
+                style={{ animationDelay: '0.6s' }}
+              />
+              <Sparkles
+                className="animate-twinkle absolute bottom-8 left-10 h-2.5 w-2.5 text-emerald-200/60"
+                style={{ animationDelay: '1.1s' }}
+              />
+
+              <div className="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center">
+                <span className="animate-pulse-glow absolute inset-0 rounded-full bg-emerald-400/30 blur-md" />
+                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/50">
+                  <CheckCircle2 className="animate-check-pop h-7 w-7 text-emerald-300" />
                 </span>
+              </div>
+
+              <p className="bg-gradient-to-r from-emerald-200 to-cyan-200 bg-clip-text text-lg font-bold text-transparent">
+                {amountLabel} ZNTH claimed!
+              </p>
+              <p className="mx-auto mt-1 max-w-xs text-xs text-zinc-400">
+                Tokens are in your wallet. Delegate them to unlock your voting power.
+              </p>
+
+              <div className="mt-4 flex flex-col items-center gap-2">
+                <Link to="/delegate" className="btn-primary w-full max-w-xs">
+                  Delegate to vote
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
                 {hash && (
                   <a
                     href={etherscanTx(hash)}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-200/80 hover:text-emerald-200"
                   >
-                    tx <ExternalLink className="h-3 w-3" />
+                    View transaction <ExternalLink className="h-3 w-3" />
                   </a>
                 )}
               </div>
-              <Link
-                to="/delegate"
-                className="group flex items-center justify-center gap-1.5 text-xs font-medium text-zenith-300 hover:text-zenith-200"
-              >
-                Delegate to activate voting power
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </Link>
             </div>
           )}
         </div>
