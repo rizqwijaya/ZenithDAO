@@ -5,6 +5,7 @@ import { Proposals } from './pages/Proposals';
 import { ProposalDetail } from './pages/ProposalDetail';
 import { CreateProposal } from './pages/CreateProposal';
 import { Delegate } from './pages/Delegate';
+import { Claim } from './pages/Claim';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/proposals/:id" element={<ProposalDetail />} />
         <Route path="/create" element={<CreateProposal />} />
         <Route path="/delegate" element={<Delegate />} />
+        <Route path="/claim" element={<Claim />} />
         <Route path="*" element={<Dashboard />} />
       </Routes>
     </Layout>

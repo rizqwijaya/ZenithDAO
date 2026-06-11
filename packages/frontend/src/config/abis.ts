@@ -32,3 +32,12 @@ export const vaultAbi = parseAbi([
   'function executeETH(address target, uint256 amount)',
   'function executeERC20(address token, address to, uint256 amount)',
 ]);
+
+export const faucetAbi = parseAbi([
+  'function amountPerClaim() view returns (uint256)',
+  'function cooldown() view returns (uint256)',
+  'function lastClaim(address account) view returns (uint256)',
+  'function canClaim(address account) view returns (bool)',
+  'function secondsUntilNextClaim(address account) view returns (uint256)',
+  'function claim()',
+]);

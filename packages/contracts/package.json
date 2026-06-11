@@ -10,11 +10,7 @@
     "fmt": "forge fmt",
     "deploy:sepolia": "forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --broadcast --verify -vvvv",
     "deploy:sepolia:dry": "forge script script/Deploy.s.sol:Deploy --rpc-url sepolia -vvvv",
-    "airdrop:gen": "node script/merkle-airdrop.mjs",
-    "deploy:airdrop:sepolia": "forge script script/DeployAirdrop.s.sol:DeployAirdrop --rpc-url sepolia --broadcast --verify -vvvv",
-    "deploy:airdrop:sepolia:dry": "forge script script/DeployAirdrop.s.sol:DeployAirdrop --rpc-url sepolia -vvvv"
-  },
-  "devDependencies": {
-    "@openzeppelin/merkle-tree": "^1.0.8"
+    "deploy:faucet:sepolia": "forge script script/DeployFaucet.s.sol:DeployFaucet --rpc-url sepolia --broadcast --verify -vvvv",
+    "deploy:faucet:sepolia:dry": "forge script script/DeployFaucet.s.sol:DeployFaucet --rpc-url sepolia -vvvv"
   }
 }
