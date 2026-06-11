@@ -6,7 +6,7 @@ import {
   useWaitForTransactionReceipt,
 } from 'wagmi';
 import { isAddress, zeroAddress, type Address } from 'viem';
-import { Loader2, UserCheck, Zap, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Loader2, UserCheck, Zap, ExternalLink, CheckCircle2, Sparkles } from 'lucide-react';
 import { tokenAbi } from '../config/abis';
 import { TOKEN_ADDRESS, etherscanTx } from '../config/contracts';
 import { fmtTokens, shortAddress } from '../lib/format';
@@ -132,13 +132,40 @@ export function DelegatePanel() {
         )}
 
         {isSuccess && (
-          <div className="flex items-center justify-between rounded-lg bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="h-4 w-4" /> Delegation confirmed
-            </span>
+          <div className="animate-pop-in relative overflow-hidden rounded-xl border border-emerald-400/30 bg-gradient-to-br from-emerald-500/15 to-cyan-500/10 p-5 text-center">
+            {/* twinkling sparkle accents */}
+            <Sparkles className="absolute left-5 top-4 h-3.5 w-3.5 text-emerald-300/70 animate-twinkle" />
+            <Sparkles
+              className="absolute right-6 top-6 h-3 w-3 text-cyan-300/70 animate-twinkle"
+              style={{ animationDelay: '0.6s' }}
+            />
+            <Sparkles
+              className="absolute bottom-4 left-10 h-2.5 w-2.5 text-emerald-200/60 animate-twinkle"
+              style={{ animationDelay: '1.1s' }}
+            />
+
+            <div className="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center">
+              <span className="absolute inset-0 rounded-full bg-emerald-400/30 blur-md animate-pulse-glow" />
+              <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/50">
+                <CheckCircle2 className="h-7 w-7 text-emerald-300 animate-check-pop" />
+              </span>
+            </div>
+
+            <p className="bg-gradient-to-r from-emerald-200 to-cyan-200 bg-clip-text text-sm font-bold text-transparent">
+              Voting power activated
+            </p>
+            <p className="mx-auto mt-1 max-w-xs text-xs text-zinc-400">
+              Your ZNTH now counts in every vote. You’re ready to govern.
+            </p>
+
             {hash && (
-              <a href={etherscanTx(hash)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline">
-                tx <ExternalLink className="h-3 w-3" />
+              <a
+                href={etherscanTx(hash)}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-emerald-200 transition hover:bg-white/10"
+              >
+                View transaction <ExternalLink className="h-3 w-3" />
               </a>
             )}
           </div>
