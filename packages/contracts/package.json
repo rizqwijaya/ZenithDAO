@@ -11,6 +11,8 @@
     "deploy:sepolia": "forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --broadcast --verify -vvvv",
     "deploy:sepolia:dry": "forge script script/Deploy.s.sol:Deploy --rpc-url sepolia -vvvv",
     "deploy:faucet:sepolia": "forge script script/DeployFaucet.s.sol:DeployFaucet --rpc-url sepolia --broadcast --verify -vvvv",
-    "deploy:faucet:sepolia:dry": "forge script script/DeployFaucet.s.sol:DeployFaucet --rpc-url sepolia -vvvv"
+    "deploy:faucet:sepolia:dry": "forge script script/DeployFaucet.s.sol:DeployFaucet --rpc-url sepolia -vvvv",
+    "deploy:governor:sepolia": "forge script script/DeployGovernor.s.sol:DeployGovernor --rpc-url sepolia --broadcast --verify -vvvv",
+    "deploy:governor:sepolia:dry": "forge script script/DeployGovernor.s.sol:DeployGovernor --rpc-url sepolia -vvvv"
   }
 }

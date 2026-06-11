@@ -21,7 +21,7 @@ contract ZenithGovernor is
         GovernorSettings(
             1, // votingDelay: 1 blok
             50, // votingPeriod: 50 blok (testnet)
-            1000e18 // proposalThreshold: 1.000 ZNTH
+            10e18 // proposalThreshold: 10 ZNTH (testnet)
         )
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4) // quorum: 4% total supply
