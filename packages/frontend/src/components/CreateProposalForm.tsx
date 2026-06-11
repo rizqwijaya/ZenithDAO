@@ -117,9 +117,9 @@ export function CreateProposalForm() {
       <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
         <span className="text-zinc-400">Your voting power</span>
         <span className="font-semibold text-white">
-          {votes !== undefined ? fmtTokens(votes as bigint) : '—'} ZNTH
+          {votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH
           <span className="ml-2 text-xs font-normal text-zinc-500">
-            / {threshold !== undefined ? fmtTokens(threshold as bigint) : '—'} required
+            / {threshold !== undefined ? fmtTokens(threshold as bigint) : '-'} required
           </span>
         </span>
       </div>

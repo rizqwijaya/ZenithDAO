@@ -12,12 +12,12 @@ async function main(): Promise<void> {
 
   await app.register(cors, { origin: true });
 
-  // Ensure schema exists. If the DB is unreachable, keep serving — /health reports it.
+  // Ensure schema exists. If the DB is unreachable, keep serving - /health reports it.
   try {
     await initDb();
     app.log.info('Database schema ready.');
   } catch (err) {
-    app.log.error({ err }, 'Database init failed — DB-backed routes will error until it is reachable.');
+    app.log.error({ err }, 'Database init failed - DB-backed routes will error until it is reachable.');
   }
 
   await registerRoutes(app);

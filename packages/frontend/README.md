@@ -23,9 +23,9 @@ pnpm dev                # http://localhost:5173
 
 | Route | Page |
 |---|---|
-| `/` | Dashboard — treasury balance, stats, active proposals |
+| `/` | Dashboard - treasury balance, stats, active proposals |
 | `/proposals` | All proposals + status filter |
-| `/proposals/:id` | Detail — description, tally, timeline, vote/queue/execute |
+| `/proposals/:id` | Detail - description, tally, timeline, vote/queue/execute |
 | `/create` | Create a treasury proposal |
 | `/delegate` | Delegate / activate voting power |
 

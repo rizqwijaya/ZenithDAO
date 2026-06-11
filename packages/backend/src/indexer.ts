@@ -16,7 +16,7 @@ const argsOf = (ev: Ev): Record<string, any> => (ev as ethers.EventLog).args as 
  */
 export async function startIndexer(log: Logger): Promise<void> {
   if (!indexerEnabled() || !provider || !governor || !vault) {
-    log.warn('Indexer disabled — set SEPOLIA_RPC_URL + governor/vault addresses to enable.');
+    log.warn('Indexer disabled - set SEPOLIA_RPC_URL + governor/vault addresses to enable.');
     return;
   }
   // Narrow the module-level nullables into non-null locals for the closure below.
@@ -54,7 +54,7 @@ export async function startIndexer(log: Logger): Promise<void> {
 
   await tick();
   setInterval(tick, config.pollIntervalMs);
-  log.info(`Indexer running — polling every ${config.pollIntervalMs}ms from block ${cursor}.`);
+  log.info(`Indexer running - polling every ${config.pollIntervalMs}ms from block ${cursor}.`);
 }
 
 async function indexRange(

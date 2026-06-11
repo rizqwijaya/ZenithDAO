@@ -1,4 +1,4 @@
-# ZenithDAO — Project Specification
+# ZenithDAO - Project Specification
 
 > **Tagline:** Govern without limits.  
 > **Stack:** Solidity · Foundry · OpenZeppelin · Node.js · TypeScript · React · wagmi · TailwindCSS  
@@ -9,7 +9,7 @@
 
 ## 1. Overview
 
-ZenithDAO adalah protokol governance on-chain yang memungkinkan komunitas mengelola treasury bersama secara transparan dan trustless. Holder token **$ZNTH** dapat membuat proposal, melakukan voting, dan mengeksekusi keputusan secara otomatis melalui smart contract — tanpa perantara, tanpa kepercayaan buta kepada individu manapun.
+ZenithDAO adalah protokol governance on-chain yang memungkinkan komunitas mengelola treasury bersama secara transparan dan trustless. Holder token **$ZNTH** dapat membuat proposal, melakukan voting, dan mengeksekusi keputusan secara otomatis melalui smart contract - tanpa perantara, tanpa kepercayaan buta kepada individu manapun.
 
 ### Komponen utama
 
@@ -70,8 +70,8 @@ contract ZenithToken is ERC20, ERC20Permit, ERC20Votes {
 ```
 
 **Fungsi kunci:**
-- `delegate(address delegatee)` — aktifkan voting power (wajib dipanggil sebelum bisa vote)
-- `getPastVotes(address, blockNumber)` — snapshot voting power per blok
+- `delegate(address delegatee)` - aktifkan voting power (wajib dipanggil sebelum bisa vote)
+- `getPastVotes(address, blockNumber)` - snapshot voting power per blok
 - Total supply: **1.000.000 ZNTH** di-mint ke deployer
 
 ---
@@ -222,7 +222,7 @@ contract Deploy is Script {
         timelock.grantRole(timelock.PROPOSER_ROLE(), address(governor));
         timelock.grantRole(timelock.CANCELLER_ROLE(), address(governor));
 
-        // 6. Revoke admin dari deployer (opsional — fully decentralized)
+        // 6. Revoke admin dari deployer (opsional - fully decentralized)
         // timelock.revokeRole(timelock.TIMELOCK_ADMIN_ROLE(), deployer);
 
         vm.stopBroadcast();
@@ -241,7 +241,7 @@ contract Deploy is Script {
 
 **Path:** `packages/contracts/test/`
 
-#### ZenithToken.t.sol — test token dan voting power
+#### ZenithToken.t.sol - test token dan voting power
 ```
 - test_MintOnDeploy()         → total supply = 1.000.000 ZNTH
 - test_DelegateToSelf()       → voting power aktif setelah delegate
@@ -249,7 +249,7 @@ contract Deploy is Script {
 - test_TransferResetsVotes()  → voting power pindah ke holder baru
 ```
 
-#### ZenithGovernor.t.sol — full proposal lifecycle
+#### ZenithGovernor.t.sol - full proposal lifecycle
 ```
 - test_CreateProposal()       → propose() berhasil, return proposalId
 - test_VotingPeriod()         → state berubah: Pending → Active
@@ -259,7 +259,7 @@ contract Deploy is Script {
 - test_QueueAndExecute()      → full flow: queue → timelock → execute → dana keluar
 ```
 
-#### ZenithVault.t.sol — treasury access control
+#### ZenithVault.t.sol - treasury access control
 ```
 - test_ReceiveETH()           → vault bisa terima ETH
 - test_OnlyTimelockCanExecute → revert kalau bukan timelock
@@ -455,4 +455,4 @@ ZenithVault:    0xe66d01d6489734EeA04E1a03A57342fd9c7237C8
 
 ---
 
-*ZenithDAO — Govern without limits.*
+*ZenithDAO - Govern without limits.*

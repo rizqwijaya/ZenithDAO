@@ -1,7 +1,12 @@
 import { formatEther } from 'viem';
 
+/** Normalize on-chain/user text: em & en dashes -> plain hyphen. */
+export function dashClean(s?: string | null): string {
+  return (s ?? '').replace(/[—–]/g, '-');
+}
+
 export function shortAddress(addr?: string | null, chars = 4): string {
-  if (!addr) return '—';
+  if (!addr) return '-';
   return `${addr.slice(0, 2 + chars)}…${addr.slice(-chars)}`;
 }
 

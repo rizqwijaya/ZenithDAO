@@ -1,4 +1,4 @@
-// Minimal human-readable ABIs — only the events + view functions the indexer
+// Minimal human-readable ABIs - only the events + view functions the indexer
 // and the REST API need. Matches the OpenZeppelin Governor / ZenithVault / ERC20Votes
 // surfaces deployed on Sepolia.
 

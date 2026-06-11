@@ -22,7 +22,7 @@ import { GOVERNOR_ADDRESS, etherscanAddress, etherscanTx } from '../config/contr
 import { useProposal, useProposalVotes } from '../hooks/useBackend';
 import { useProposalActions } from '../hooks/useProposalActions';
 import { STATE_TO_STATUS, proposalTitle } from '../lib/status';
-import { fmtTokens, shortAddress, timeAgo } from '../lib/format';
+import { fmtTokens, shortAddress, timeAgo, dashClean } from '../lib/format';
 import { StatusBadge } from '../components/StatusBadge';
 import { VoteTally } from '../components/VoteTally';
 import { ProposalTimeline } from '../components/ProposalTimeline';
@@ -126,7 +126,7 @@ export function ProposalDetail() {
           <section className="card p-6">
             <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-400">Description</h2>
             <p className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
-              {proposal.description || 'No description provided.'}
+              {dashClean(proposal.description) || 'No description provided.'}
             </p>
           </section>
 
@@ -146,7 +146,7 @@ export function ProposalDetail() {
                         <span className={`badge ${supportClass(v.support)}`}>{v.supportLabel}</span>
                         <span className="font-mono text-xs text-zinc-400">{shortAddress(v.voter)}</span>
                       </div>
-                      {v.reason && <p className="mt-1.5 text-sm text-zinc-400">“{v.reason}”</p>}
+                      {v.reason && <p className="mt-1.5 text-sm text-zinc-400">“{dashClean(v.reason)}”</p>}
                     </div>
                     <span className="shrink-0 text-sm font-semibold text-zinc-200">
                       {fmtTokens(v.weight)} <span className="text-xs font-normal text-zinc-500">ZNTH</span>
@@ -210,7 +210,7 @@ export function ProposalDetail() {
             {status === 'pending' && (
               <Note icon={Clock}>Voting hasn’t opened yet (1-block delay after creation).</Note>
             )}
-            {status === 'executed' && <Note icon={Rocket}>Executed — funds released from the treasury.</Note>}
+            {status === 'executed' && <Note icon={Rocket}>Executed - funds released from the treasury.</Note>}
             {(status === 'defeated' || status === 'canceled' || status === 'expired') && (
               <Note icon={Clock}>This proposal is closed ({status}).</Note>
             )}

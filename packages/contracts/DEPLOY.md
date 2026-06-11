@@ -1,4 +1,4 @@
-# ZenithDAO — Deployment Runbook (Sepolia)
+# ZenithDAO - Deployment Runbook (Sepolia)
 
 End-to-end deploy + Etherscan verification for the four contracts. Needs three secrets you supply in `.env`.
 
@@ -55,10 +55,10 @@ forge script script/Deploy.s.sol:Deploy \
 
 The deploy order (from `Deploy.s.sol`):
 
-1. `ZenithToken` — mints 1,000,000 ZNTH to deployer
-2. `TimelockController` — 300s delay, open executor (`address(0)`), deployer as admin
-3. `ZenithGovernor` — wired to token + timelock
-4. `ZenithVault` — admin + executor = timelock
+1. `ZenithToken` - mints 1,000,000 ZNTH to deployer
+2. `TimelockController` - 300s delay, open executor (`address(0)`), deployer as admin
+3. `ZenithGovernor` - wired to token + timelock
+4. `ZenithVault` - admin + executor = timelock
 5. Grants `PROPOSER_ROLE` + `CANCELLER_ROLE` on the timelock to the governor
 
 The four addresses are printed at the end via `console.log` and also saved by Forge to

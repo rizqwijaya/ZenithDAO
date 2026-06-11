@@ -26,7 +26,7 @@ export function Dashboard() {
             Govern the treasury, <span className="text-zenith-300">without limits.</span>
           </h1>
           <p className="mt-3 text-zinc-400">
-            ZenithDAO lets $ZNTH holders propose, vote, and execute treasury decisions trustlessly —
+            ZenithDAO lets $ZNTH holders propose, vote, and execute treasury decisions trustlessly -
             enforced entirely by smart contracts.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">

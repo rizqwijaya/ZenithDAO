@@ -1,4 +1,4 @@
-# ZenithDAO — Govern without limits
+# ZenithDAO - Govern without limits
 
 On-chain DAO governance protocol on Ethereum Sepolia. Holders of **$ZNTH** create proposals, vote, and execute treasury decisions trustlessly via smart contracts.
 
@@ -57,4 +57,4 @@ See [packages/contracts/DEPLOY.md](packages/contracts/DEPLOY.md) for the Sepolia
 
 ---
 
-*ZenithDAO — Govern without limits.*
+*ZenithDAO - Govern without limits.*

@@ -25,5 +25,5 @@ export const STATUS_BY_STATE: Record<number, string> = {
   7: 'executed',
 };
 
-/** Statuses that will never change again — no need to re-query the chain. */
+/** Statuses that will never change again - no need to re-query the chain. */
 export const TERMINAL_STATUSES = new Set(['canceled', 'defeated', 'expired', 'executed']);

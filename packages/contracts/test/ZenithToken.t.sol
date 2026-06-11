@@ -27,7 +27,7 @@ contract ZenithTokenTest is Test {
 
     /// voting power only becomes active after delegate()
     function test_DelegateToSelf() public {
-        // Holding tokens is not enough — votes are 0 until delegation.
+        // Holding tokens is not enough - votes are 0 until delegation.
         assertEq(token.getVotes(deployer), 0);
 
         token.delegate(deployer);

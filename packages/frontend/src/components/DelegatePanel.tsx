@@ -70,8 +70,8 @@ export function DelegatePanel() {
     <div className="space-y-5">
       <div className="card p-6">
         <div className="grid gap-4 sm:grid-cols-3">
-          <Stat label="Token balance" value={`${balance !== undefined ? fmtTokens(balance as bigint) : '—'} ZNTH`} />
-          <Stat label="Voting power" value={`${votes !== undefined ? fmtTokens(votes as bigint) : '—'} ZNTH`} highlight />
+          <Stat label="Token balance" value={`${balance !== undefined ? fmtTokens(balance as bigint) : '-'} ZNTH`} />
+          <Stat label="Voting power" value={`${votes !== undefined ? fmtTokens(votes as bigint) : '-'} ZNTH`} highlight />
           <Stat
             label="Delegated to"
             value={notDelegated ? 'Nobody' : isSelfDelegated ? 'Self' : shortAddress(delegatedTo)}

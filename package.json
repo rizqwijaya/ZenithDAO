@@ -2,9 +2,10 @@
   "name": "zenithdao",
   "version": "1.0.0",
   "private": true,
-  "description": "ZenithDAO — on-chain DAO governance protocol. Govern without limits.",
+  "description": "ZenithDAO - on-chain DAO governance protocol. Govern without limits.",
   "license": "MIT",
   "scripts": {
+    "dev": "pnpm --parallel --filter @zenithdao/frontend --filter @zenithdao/backend dev",
     "backend:dev": "pnpm --filter @zenithdao/backend dev",
     "backend:build": "pnpm --filter @zenithdao/backend build",
     "frontend:dev": "pnpm --filter @zenithdao/frontend dev",

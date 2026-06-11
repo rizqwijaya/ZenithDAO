@@ -1,12 +1,12 @@
-# ZenithDAO — Full Deployment Runbook
+# ZenithDAO - Full Deployment Runbook
 
 Everything is built and tested locally. The remaining steps need **your** secrets
-(a funded Sepolia wallet, an RPC URL, an Etherscan key, a Vercel account) — they
+(a funded Sepolia wallet, an RPC URL, an Etherscan key, a Vercel account) - they
 can't be done without them. Follow in order.
 
 ---
 
-## Step 1 — Deploy + verify contracts (Sepolia)
+## Step 1 - Deploy + verify contracts (Sepolia)
 
 Needs: funded deployer wallet, `SEPOLIA_RPC_URL`, `ETHERSCAN_API_KEY`.
 
@@ -32,7 +32,7 @@ This writes `ZENITH_*` into `packages/backend/.env` and `VITE_*` into
 
 ---
 
-## Step 2 — Backend indexer + database
+## Step 2 - Backend indexer + database
 
 Needs: a PostgreSQL database, `SEPOLIA_RPC_URL`.
 
@@ -57,7 +57,7 @@ PostgreSQL. `pnpm build && pnpm start`.
 
 ---
 
-## Step 3 — Frontend dApp + Vercel
+## Step 3 - Frontend dApp + Vercel
 
 Needs: a Vercel account, `VITE_WALLETCONNECT_ID` (https://cloud.reown.com),
 optionally `VITE_ALCHEMY_ID`.
@@ -83,10 +83,10 @@ In the Vercel project settings:
 
 ---
 
-## Step 4 — First-run governance smoke test
+## Step 4 - First-run governance smoke test
 
 1. Open the dApp, connect a wallet holding ZNTH (the deployer holds all 1,000,000).
-2. **Delegate** to yourself (`/delegate`) — voting power is 0 until you do.
+2. **Delegate** to yourself (`/delegate`) - voting power is 0 until you do.
 3. **Create** a treasury proposal (`/create`). Fund the vault first by sending it
    some Sepolia ETH so a payout can execute.
 4. Wait 1 block, **vote** For.

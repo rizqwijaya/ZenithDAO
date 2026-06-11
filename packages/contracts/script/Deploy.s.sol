@@ -33,7 +33,7 @@ contract Deploy is Script {
         timelock.grantRole(timelock.PROPOSER_ROLE(), address(governor));
         timelock.grantRole(timelock.CANCELLER_ROLE(), address(governor));
 
-        // 6. Revoke admin dari deployer (opsional — fully decentralized)
+        // 6. Revoke admin dari deployer (opsional - fully decentralized)
         // timelock.revokeRole(timelock.TIMELOCK_ADMIN_ROLE(), deployer);
 
         vm.stopBroadcast();

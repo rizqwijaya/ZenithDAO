@@ -21,7 +21,7 @@ export function TreasuryBalance() {
         </div>
         <div className="mt-3 flex items-baseline gap-2">
           <span className="text-4xl font-bold tracking-tight text-white">
-            {isLoading ? '—' : formatted}
+            {isLoading ? '-' : formatted}
           </span>
           <span className="text-lg font-semibold text-zenith-300">ETH</span>
         </div>

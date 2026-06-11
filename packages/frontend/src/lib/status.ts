@@ -76,6 +76,6 @@ export function statusMeta(status?: string): StatusMeta {
 /** Short, human title from a proposal description (first line). */
 export function proposalTitle(description?: string): string {
   if (!description) return 'Untitled proposal';
-  const firstLine = description.split('\n')[0].trim();
+  const firstLine = description.split('\n')[0].trim().replace(/[—–]/g, '-');
   return firstLine.length > 120 ? `${firstLine.slice(0, 117)}…` : firstLine || 'Untitled proposal';
 }

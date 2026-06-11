@@ -22,7 +22,7 @@ function serializeProposal(p: Record<string, any>) {
 }
 
 export async function registerRoutes(app: FastifyInstance): Promise<void> {
-  // GET /health — health check
+  // GET /health - health check
   app.get('/health', async () => {
     const dbUp = await ping();
     let chainUp = false;
@@ -44,7 +44,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     };
   });
 
-  // GET /proposals — list all proposals (+ optional ?status= filter)
+  // GET /proposals - list all proposals (+ optional ?status= filter)
   app.get('/proposals', async (req) => {
     const status = (req.query as { status?: string } | undefined)?.status;
     const rows = status
@@ -53,7 +53,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return rows.map(serializeProposal);
   });
 
-  // GET /proposals/:id — proposal detail
+  // GET /proposals/:id - proposal detail
   app.get('/proposals/:id', async (req, reply) => {
     const { id } = req.params as { id: string };
     const rows = await query('SELECT * FROM proposals WHERE proposal_id = $1', [id]);
@@ -61,7 +61,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     return serializeProposal(rows[0]);
   });
 
-  // GET /proposals/:id/votes — all votes for a proposal
+  // GET /proposals/:id/votes - all votes for a proposal
   app.get('/proposals/:id/votes', async (req) => {
     const { id } = req.params as { id: string };
     const rows = await query(
@@ -83,7 +83,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     }));
   });
 
-  // GET /treasury — ETH balance + transaction history
+  // GET /treasury - ETH balance + transaction history
   app.get('/treasury', async () => {
     let balanceWei = '0';
     if (provider && config.addresses.vault) {
@@ -115,7 +115,7 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
     };
   });
 
-  // GET /delegates/:address — voting power for an address
+  // GET /delegates/:address - voting power for an address
   app.get('/delegates/:address', async (req, reply) => {
     const { address } = req.params as { address: string };
     if (!ethers.isAddress(address)) return reply.code(400).send({ error: 'Invalid address' });

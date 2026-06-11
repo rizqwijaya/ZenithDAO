@@ -18,7 +18,7 @@ interface DbPool {
 }
 
 // Neon hosts are reached over HTTPS/WebSocket (port 443) via the serverless
-// driver — this works on networks that block the raw Postgres port (5432).
+// driver - this works on networks that block the raw Postgres port (5432).
 // Any other URL uses plain node-postgres.
 const isNeon = /neon\.tech/i.test(config.databaseUrl);
 
@@ -34,7 +34,7 @@ export const pool = createPool();
 
 // Prevent an idle-client connection error from crashing the process.
 pool.on('error', () => {
-  /* swallowed — surfaced via /health and per-query try/catch */
+  /* swallowed - surfaced via /health and per-query try/catch */
 });
 
 // schema.sql lives at the package root, one level above both src/ (dev) and dist/ (prod).
@@ -53,7 +53,7 @@ function splitStatements(sql: string): string[] {
 export async function initDb(): Promise<void> {
   const statements = splitStatements(readFileSync(schemaPath, 'utf8'));
   // Serverless Postgres can reset/stall the first connection while waking from
-  // idle — retry the whole batch a few times before giving up.
+  // idle - retry the whole batch a few times before giving up.
   let lastErr: unknown;
   for (let attempt = 1; attempt <= 6; attempt++) {
     try {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "ZenithDAO backend indexer — Fastify + PostgreSQL + ethers v6",
+  "description": "ZenithDAO backend indexer - Fastify + PostgreSQL + ethers v6",
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/index.ts",

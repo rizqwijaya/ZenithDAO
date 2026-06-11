@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "ZenithDAO dApp — React + Vite + wagmi + RainbowKit",
+  "description": "ZenithDAO dApp - React + Vite + wagmi + RainbowKit",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
