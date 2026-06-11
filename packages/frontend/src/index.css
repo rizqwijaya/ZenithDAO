@@ -13,6 +13,12 @@
     height: 100%;
   }
 
+  /* Decorative glows may bleed past content width; clip horizontally so they
+     never add a scrollbar. `clip` (not `hidden`) keeps sticky positioning working. */
+  #root {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-ink-900 text-zinc-200 font-sans antialiased;
     background-image:

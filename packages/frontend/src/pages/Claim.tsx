@@ -5,22 +5,23 @@ import { AddTokenCard } from '../components/AddTokenCard';
 export function Claim() {
   return (
     <div className="relative mx-auto max-w-2xl">
-      {/* Drifting accent glow behind the hero. Full-viewport width so the clip
-          edges sit off-screen and a radial fade keeps the bottom soft — no hard
-          rectangle, no horizontal scroll. */}
+      {/* Soft accent glow behind the hero. Pulled up behind the navbar and wider
+          than the content so the radial's bright center and all falloff edges sit
+          off-screen — only a smooth gradient shows. No overflow clip here (the
+          gradient/blur fade on their own); #root clips horizontal bleed. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[440px] w-screen -translate-x-1/2 overflow-hidden"
+        className="pointer-events-none absolute left-1/2 top-[-140px] -z-10 h-[560px] w-[130%] -translate-x-1/2"
       >
         <div
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(50% 60% at 50% 0%, rgba(59,130,246,0.16), transparent 72%)',
+            background: 'radial-gradient(45% 50% at 50% 42%, rgba(59,130,246,0.14), transparent 70%)',
           }}
         />
-        <div className="animate-blob absolute left-[18%] top-4 h-64 w-64 rounded-full bg-zenith-500/25 blur-[80px]" />
+        <div className="animate-blob absolute left-1/4 top-32 h-56 w-56 -translate-x-1/2 rounded-full bg-zenith-500/20 blur-[80px]" />
         <div
-          className="animate-blob absolute right-[18%] top-24 h-56 w-56 rounded-full bg-cyan-500/20 blur-[80px]"
+          className="animate-blob absolute right-1/4 top-48 h-52 w-52 translate-x-1/2 rounded-full bg-cyan-500/15 blur-[80px]"
           style={{ animationDelay: '5s' }}
         />
       </div>
