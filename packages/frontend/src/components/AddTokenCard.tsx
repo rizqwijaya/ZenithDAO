@@ -49,9 +49,9 @@ export function AddTokenCard() {
   }
 
   return (
-    <div className="card space-y-4 p-6">
+    <div className="group card space-y-4 p-6 transition hover:border-zenith-500/30">
       <div className="flex items-center gap-2">
-        <Coins className="h-4 w-4 text-zenith-300" />
+        <Coins className="h-4 w-4 text-zenith-300 transition-transform duration-500 group-hover:rotate-[20deg]" />
         <h3 className="text-base font-semibold text-white">Add ZNTH to your wallet</h3>
       </div>
       <p className="text-sm text-zinc-400">

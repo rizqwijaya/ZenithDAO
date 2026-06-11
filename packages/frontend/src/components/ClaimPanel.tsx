@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { Droplets, Loader2, CheckCircle2, ExternalLink, Lock, Clock, ArrowRight } from 'lucide-react';
+import {
+  Droplets,
+  Loader2,
+  CheckCircle2,
+  ExternalLink,
+  Lock,
+  Clock,
+  ArrowRight,
+  Coins,
+  Activity,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { faucetAbi, tokenAbi } from '../config/abis';
 import { FAUCET_ADDRESS, TOKEN_ADDRESS, etherscanTx } from '../config/contracts';
@@ -26,6 +36,12 @@ export function ClaimPanel() {
     address: FAUCET_ADDRESS,
     abi: faucetAbi,
     functionName: 'amountPerClaim',
+    query: { enabled: live },
+  });
+  const { data: cooldownRaw } = useReadContract({
+    address: FAUCET_ADDRESS,
+    abi: faucetAbi,
+    functionName: 'cooldown',
     query: { enabled: live },
   });
   const { data: secsRaw, refetch: refetchSecs } = useReadContract({
@@ -60,7 +76,6 @@ export function ClaimPanel() {
     return () => clearInterval(t);
   }, [remaining > 0]);
 
-  // Refresh the cooldown once a claim confirms.
   useEffect(() => {
     if (isSuccess) void refetchSecs();
   }, [isSuccess, refetchSecs]);
@@ -70,6 +85,15 @@ export function ClaimPanel() {
   const empty =
     amount !== undefined && faucetBalance !== undefined && (faucetBalance as bigint) < (amount as bigint);
   const amountLabel = amount !== undefined ? fmtTokens(amount as bigint) : '-';
+  const cooldownTotal = cooldownRaw !== undefined ? Number(cooldownRaw) : 0;
+
+  const statusLabel = !isConnected
+    ? 'Connect'
+    : onCooldown
+      ? 'On cooldown'
+      : empty
+        ? 'Faucet empty'
+        : 'Ready';
 
   function submitClaim() {
     if (!FAUCET_ADDRESS) return;
@@ -77,95 +101,187 @@ export function ClaimPanel() {
     writeContract({ address: FAUCET_ADDRESS, abi: faucetAbi, functionName: 'claim' });
   }
 
-  const statusLabel = !isConnected
-    ? '-'
-    : onCooldown
-      ? 'On cooldown'
-      : empty
-        ? 'Faucet empty'
-        : 'Ready';
-
   return (
     <div className="space-y-5">
-      <div className="card p-6">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Stat label="Amount per claim" value={`${amountLabel} ZNTH`} highlight />
-          <Stat label="Your status" value={statusLabel} />
-        </div>
-        <p className="mt-4 text-xs text-zinc-500">
-          Open to every wallet. After each claim you must wait for the cooldown before claiming again.
-        </p>
+      <div className="grid animate-fade-up gap-4 sm:grid-cols-2" style={{ animationDelay: '60ms' }}>
+        <StatCard
+          icon={Coins}
+          label="Amount per claim"
+          value={`${amountLabel} ZNTH`}
+          accent="from-zenith-500/20 to-cyan-500/10"
+          highlight
+        />
+        <StatCard icon={Activity} label="Your status" value={statusLabel} accent="from-white/10 to-white/5" />
       </div>
 
-      <div className="card space-y-4 p-6">
-        <div>
-          <h3 className="text-base font-semibold text-white">Get test ZNTH</h3>
-          <p className="mt-1 text-sm text-zinc-400">
-            Claim {amountLabel} ZNTH to your wallet, then delegate it to start voting.
-          </p>
-        </div>
+      <div
+        className="card relative animate-fade-up overflow-hidden p-6"
+        style={{ animationDelay: '120ms' }}
+      >
+        {/* soft accent wash in the corner */}
+        <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-zenith-500/10 blur-3xl" />
 
-        {!live ? (
-          <Banner icon={Lock}>
-            The faucet isn’t live yet. Once it’s deployed and configured, any wallet can claim here.
-          </Banner>
-        ) : !isConnected ? (
-          <Banner icon={Droplets}>Connect your wallet to claim test tokens.</Banner>
-        ) : empty ? (
-          <Banner icon={Lock}>The faucet is out of tokens right now. Check back after it’s refilled.</Banner>
-        ) : onCooldown ? (
-          <button disabled className="btn-primary w-full">
-            <Clock className="h-4 w-4" />
-            Available in {formatCountdown(remaining)}
-          </button>
-        ) : (
-          <button onClick={submitClaim} disabled={busy} className="btn-primary w-full">
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Droplets className="h-4 w-4" />}
-            Claim {amountLabel} ZNTH
-          </button>
-        )}
+        <div className="relative space-y-5">
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-white">Get test ZNTH</h3>
+            <p className="mx-auto mt-1 max-w-sm text-sm text-zinc-400">
+              Claim {amountLabel} ZNTH to your wallet, then delegate it to start voting.
+            </p>
+          </div>
 
-        {error && (
-          <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-xs text-rose-300">
-            {error.message.length > 160 ? `${error.message.slice(0, 157)}…` : error.message}
-          </p>
-        )}
-
-        {isSuccess && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between rounded-lg bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" /> Claimed {amountLabel} ZNTH
-              </span>
-              {hash && (
-                <a
-                  href={etherscanTx(hash)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 hover:underline"
-                >
-                  tx <ExternalLink className="h-3 w-3" />
-                </a>
+          {/* The centerpiece adapts to state: emblem + claim, or a live countdown ring. */}
+          {!live ? (
+            <Banner icon={Lock}>
+              The faucet isn’t live yet. Once it’s deployed and configured, any wallet can claim here.
+            </Banner>
+          ) : empty ? (
+            <>
+              <Emblem active={false} />
+              <Banner icon={Lock}>
+                The faucet is out of tokens right now. Check back after it’s refilled.
+              </Banner>
+            </>
+          ) : onCooldown ? (
+            <div className="flex flex-col items-center gap-3">
+              <CooldownRing remaining={remaining} total={cooldownTotal} />
+              <p className="text-xs text-zinc-500">Come back when the ring empties to claim again.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-5">
+              <Emblem active={isConnected} />
+              {!isConnected ? (
+                <Banner icon={Droplets}>Connect your wallet to claim test tokens.</Banner>
+              ) : (
+                <button onClick={submitClaim} disabled={busy} className="btn-primary w-full max-w-xs">
+                  {busy ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Droplets className="h-4 w-4" />
+                  )}
+                  {busy ? 'Claiming…' : `Claim ${amountLabel} ZNTH`}
+                </button>
               )}
             </div>
-            <Link
-              to="/delegate"
-              className="flex items-center justify-center gap-1.5 text-xs font-medium text-zenith-300 hover:text-zenith-200"
-            >
-              Delegate to activate voting power <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
+          )}
+
+          {error && (
+            <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-xs text-rose-300">
+              {error.message.length > 160 ? `${error.message.slice(0, 157)}…` : error.message}
+            </p>
+          )}
+
+          {isSuccess && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4" /> Claimed {amountLabel} ZNTH
+                </span>
+                {hash && (
+                  <a
+                    href={etherscanTx(hash)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 hover:underline"
+                  >
+                    tx <ExternalLink className="h-3 w-3" />
+                  </a>
+                )}
+              </div>
+              <Link
+                to="/delegate"
+                className="group flex items-center justify-center gap-1.5 text-xs font-medium text-zenith-300 hover:text-zenith-200"
+              >
+                Delegate to activate voting power
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Bobbing droplet emblem with a soft glow; brighter when claiming is available. */
+function Emblem({ active }: { active: boolean }) {
+  return (
+    <div className="relative mx-auto h-24 w-24">
+      <div
+        className={`absolute inset-0 rounded-full bg-gradient-to-br from-zenith-500/40 to-cyan-500/30 blur-xl ${
+          active ? 'animate-pulse-glow' : 'opacity-40'
+        }`}
+      />
+      <div className="animate-floaty relative flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-gradient-to-br from-ink-700 to-ink-800 shadow-lg">
+        <Droplets className={`h-10 w-10 ${active ? 'text-zenith-300' : 'text-zinc-600'}`} />
+        {active && (
+          <span className="animate-drip absolute left-1/2 top-[58%] h-2.5 w-1.5 rounded-full bg-cyan-300/90" />
         )}
       </div>
     </div>
   );
 }
 
-function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+/** Circular progress ring that depletes as the cooldown counts down. */
+function CooldownRing({ remaining, total }: { remaining: number; total: number }) {
+  const r = 52;
+  const circ = 2 * Math.PI * r;
+  const frac = total > 0 ? Math.min(1, remaining / total) : 0;
+  const offset = circ * (1 - frac);
+
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <div className="stat-label">{label}</div>
-      <div className={`mt-1 text-lg font-semibold ${highlight ? 'text-zenith-200' : 'text-white'}`}>
+    <div className="relative h-36 w-36">
+      <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="8" />
+        <circle
+          cx="60"
+          cy="60"
+          r={r}
+          fill="none"
+          stroke="url(#ringGrad)"
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          style={{ transition: 'stroke-dashoffset 1s linear' }}
+        />
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#3b82f6" />
+            <stop offset="1" stopColor="#06b6d4" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <Clock className="mb-1 h-4 w-4 text-zenith-300" />
+        <span className="font-mono text-lg font-semibold text-white">{formatCountdown(remaining)}</span>
+        <span className="mt-0.5 text-[10px] uppercase tracking-wider text-zinc-500">until next claim</span>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  accent,
+  highlight,
+}: {
+  icon: typeof Coins;
+  label: string;
+  value: string;
+  accent: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="group rounded-xl border border-white/10 bg-white/5 p-4 transition hover:-translate-y-0.5 hover:border-zenith-500/40 hover:bg-white/[0.07]">
+      <div className="flex items-center gap-2">
+        <span className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${accent}`}>
+          <Icon className="h-3.5 w-3.5 text-white" />
+        </span>
+        <div className="stat-label">{label}</div>
+      </div>
+      <div className={`mt-2 text-lg font-semibold ${highlight ? 'text-zenith-200' : 'text-white'}`}>
         {value}
       </div>
     </div>
