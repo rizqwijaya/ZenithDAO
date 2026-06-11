@@ -19,28 +19,6 @@ packages/
 | Backend | Node 20 · Fastify · ethers v6 · PostgreSQL |
 | Frontend | React 18 · Vite · wagmi v2 · viem · RainbowKit · TailwindCSS |
 
-## Quick start
-
-```bash
-pnpm install
-
-# Contracts
-cd packages/contracts
-forge install
-forge build
-forge test
-
-# Backend
-cd packages/backend
-cp .env.example .env   # fill values
-pnpm dev
-
-# Frontend
-cd packages/frontend
-cp .env.example .env   # fill values
-pnpm dev
-```
-
 ## Deployment
 
 See [packages/contracts/DEPLOY.md](packages/contracts/DEPLOY.md) for the Sepolia deploy + Etherscan verification runbook, and the per-package READMEs for backend/frontend hosting.
